@@ -61,6 +61,10 @@ int main(int argc, char *argv[]){
             copied_line = (char *) malloc(strlen(line));
             strncpy(copied_line, line, strlen(line));
             field = get_vcf_field(copied_line, FILTER);
+            if (field == NULL) {
+                fprintf(stderr, "%s %s", argv[0], "is not a VCF file\n");
+                exit(EXIT_FAILURE);
+            }
             if (strcmp(field, "PASS") == 0) {
                 fprintf(stdout, "%s", line);
             }

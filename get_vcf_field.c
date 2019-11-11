@@ -4,7 +4,7 @@
 
 
 char *get_vcf_field(char *line, int field) {
-    char *token;
+    char *token = NULL;
     int token_number = 0;
     if (line[0] != '#') {
         while ((token = strtok_r(line, "\t", &line))) {
