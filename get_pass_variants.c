@@ -7,17 +7,17 @@
 
 
 int main(int argc, char *argv[]){
-    char *line;
-    char *line_to_be_printed;
+    char *line = NULL;
     size_t len = 0;    
-    FILE *vcf;
-    ssize_t read;    
+    FILE *vcf = NULL;
+    ssize_t read = 0;
     char *field;
     char c;
     int hflag = 0;
     int aflag = 0;
     int bflag = 0;
     char *sflag = NULL;
+    char *copied_line;
 
     /* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
@@ -55,20 +55,24 @@ int main(int argc, char *argv[]){
         return 1;
     }
 
+
     while ((read = getline(&line, &len, vcf) ) != -1) {
         if (line[0] != '#') {
-            line_to_be_printed = (char *) malloc(strlen(line));
-            strcpy(line_to_be_printed, line);
-            field = get_vcf_field(line, FILTER);
+            copied_line = (char *) malloc(strlen(line));
+            strncpy(copied_line, line, strlen(line));
+            field = get_vcf_field(copied_line, FILTER);
             if (strcmp(field, "PASS") == 0) {
-                fprintf(stdout, "%s", line_to_be_printed);                
+                fprintf(stdout, "%s", line);
             }
-            free(line_to_be_printed);
+            free(copied_line);
         }
-        else {
-            fprintf(stdout, "%s", line);                
-        }
+
+        
     }
+
+    free(line);
+
+    fclose(vcf);
 
     return 1;
 }
