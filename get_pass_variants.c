@@ -69,6 +69,8 @@ int main(int argc, char *argv[]){
                 fprintf(stdout, "%s", line);
             }
             free(copied_line);
+        } else {
+            fprintf(stdout, "%s", line);
         }
 
         
