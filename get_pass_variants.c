@@ -80,5 +80,5 @@ int main(int argc, char *argv[]){
 
     fclose(vcf);
 
-    return 1;
+    return 0;
 }
