@@ -14,7 +14,9 @@ int main(int argc, char *argv[]){
     int hflag = 1;
     char *nflag = NULL;
     char *column = NULL;
-    int col_number = 0;
+    int *col_numbers;
+    int col_number;
+    int found_column;
 
     /**//* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
@@ -26,7 +28,8 @@ int main(int argc, char *argv[]){
                 puts(help);
                 return 1;
             case 'n':
-                col_number = atoi(optarg);
+                /*col_number = atoi(optarg);*/
+                col_numbers = sorted_int_array_from_str(optarg);
                 break;
             case '?':
                 if (isprint(optopt))
@@ -57,11 +60,20 @@ int main(int argc, char *argv[]){
 
 
     while ((read = getline(&line, &n, f)) != -1) {
-        column = get_column(line, col_number);
-        if (column != NULL && column != "") {
-            printf("%s\n", column);
-            free(column);
+        found_column = 0;
+        for (col_number = 0; col_number < 100; col_number++) {
+            if (col_numbers[col_number] > 0){
+                column = get_column(line, col_numbers[col_number]);
+                if (column != NULL && column != "") {
+                    found_column = 1;
+                    printf("%s\t", column);
+                    free(column);
+                }
+            }
         }
+        if (found_column == 1)
+            puts("");
+
     }
 
     free(line);
