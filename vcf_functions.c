@@ -3,6 +3,40 @@
 #include <stdio.h>   /* printf */
 
 
+int compare_ints(const void *a, const void *b) {
+    int first = *(int *) a;
+    int second = *(int *) b;
+    int returned_value = first - second;
+    return returned_value;
+}
+
+
+int *sorted_int_array_from_str(char *s) {
+    char *x;
+    char dst[100];
+    static int int_array[100] = {0};
+    size_t l = (size_t) strlen(s);
+    char *tok;
+    int index;
+    int i = 0;
+
+    x = strncpy(dst, s, l);
+    tok = strtok(dst, ",");
+
+    while (tok != NULL) {
+        index = atoi(tok);
+        int_array[i] = index;
+        tok = strtok(NULL, ",");
+        i++;
+    }
+
+
+    qsort(int_array, 100, sizeof(int), compare_ints);
+
+    return int_array;
+}
+
+
 char *get_column(const char *line, const int n) {
     size_t l = strlen(line) + 2;
     char *copied_line = (char *) malloc(l);
