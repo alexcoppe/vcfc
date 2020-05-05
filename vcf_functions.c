@@ -31,7 +31,7 @@ int *sorted_int_array_from_str(char *s) {
     }
 
 
-    qsort(int_array, 100, sizeof(int), compare_ints);
+    /*qsort(int_array, 100, sizeof(int), compare_ints);*/
 
     return int_array;
 }
@@ -44,6 +44,7 @@ char *get_column(const char *line, const int n) {
     char *delim = "\t";
     int colum_done = 0;
     char *ptr = NULL;
+    
 
     strncpy(copied_line, line, l);
 
@@ -52,7 +53,7 @@ char *get_column(const char *line, const int n) {
         ptr = strtok(copied_line, delim);
         
         while (ptr != NULL) {
-            if (colum_done == n)
+            if (colum_done == n - 1)
                 break;
             ptr = strtok(NULL, delim);
             colum_done++;
