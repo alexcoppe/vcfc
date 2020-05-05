@@ -20,14 +20,15 @@ int main(int argc, char *argv[]){
 
     /**//* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
-        "-h\tshow help options";
+        "-h\tshow help options\n  "
+        "-f\tthe fields to be shown (separated by ,)";
 
-    while ((c = getopt (argc, argv, "hn:")) != -1)
+    while ((c = getopt (argc, argv, ":hf:")) != -1)
         switch (c) {
             case 'h':
                 puts(help);
                 return 1;
-            case 'n':
+            case 'f':
                 /*col_number = atoi(optarg);*/
                 col_numbers = sorted_int_array_from_str(optarg);
                 break;
