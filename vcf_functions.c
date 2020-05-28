@@ -67,7 +67,7 @@ char *get_column(const char *line, const int n) {
 
     if (ptr == NULL) {
         free(copied_line);
-        return "";
+        return NULL;
     }
 
 
