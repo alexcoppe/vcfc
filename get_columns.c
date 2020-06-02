@@ -68,8 +68,8 @@ int main(int argc, char *argv[]){
                 if (column != NULL && column != "") {
                     found_column = 1;
                     printf("%s\t", column);
-                    free(column);
                 }
+                free(column);
             }
         }
         if (found_column == 1)

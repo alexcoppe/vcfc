@@ -71,7 +71,7 @@ char *get_column(const char *line, const int n) {
     }
 
 
-    returned_line = (char *) malloc(strlen(ptr));
+    returned_line = (char *) malloc(strlen(ptr) + 1);
     strcpy(returned_line, ptr);
 
     free(copied_line);
