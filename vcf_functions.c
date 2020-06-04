@@ -37,11 +37,11 @@ int *sorted_int_array_from_str(char *s) {
 }
 
 
-char *get_column(const char *line, const int n) {
+char *get_column(const char *line, const int n, const char *delimiter_char) {
     size_t l = strlen(line) + 2;
     char *copied_line = (char *) malloc(l);
     char *returned_line = NULL;
-    char *delim = "\t";
+    const char *delim = delimiter_char;
     int colum_done = 0;
     char *ptr = NULL;
     

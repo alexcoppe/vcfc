@@ -17,13 +17,15 @@ int main(int argc, char *argv[]){
     int *col_numbers;
     int col_number;
     int found_column;
+    char *delimiter = NULL;
 
     /**//* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
         "-h\tshow help options\n  "
+        "-d\tthe field delimiter to use instead of the tab character\n  "
         "-f\tthe fields to be shown (separated by ,)";
 
-    while ((c = getopt (argc, argv, ":hf:")) != -1)
+    while ((c = getopt (argc, argv, ":hd:f:")) != -1)
         switch (c) {
             case 'h':
                 puts(help);
@@ -31,6 +33,9 @@ int main(int argc, char *argv[]){
             case 'f':
                 /*col_number = atoi(optarg);*/
                 col_numbers = sorted_int_array_from_str(optarg);
+                break;
+            case 'd':
+                delimiter = optarg;
                 break;
             case '?':
                 if (isprint(optopt))
@@ -59,12 +64,17 @@ int main(int argc, char *argv[]){
     }
 
 
+    /* Check if a delimiter is given */
+    if (delimiter == NULL)
+        delimiter = "\t";
+
 
     while ((read = getline(&line, &n, f)) != -1) {
         found_column = 0;
         for (col_number = 0; col_number < 100; col_number++) {
             if (col_numbers[col_number] > 0){
-                column = get_column(line, col_numbers[col_number]);
+                /*column = get_column(line, col_numbers[col_number], "\t");*/
+                column = get_column(line, col_numbers[col_number], delimiter);
                 if (column != NULL && column != "") {
                     found_column = 1;
                     printf("%s\t", column);
