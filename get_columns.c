@@ -73,9 +73,8 @@ int main(int argc, char *argv[]){
         found_column = 0;
         for (col_number = 0; col_number < 100; col_number++) {
             if (col_numbers[col_number] > 0){
-                /*column = get_column(line, col_numbers[col_number], "\t");*/
                 column = get_column(line, col_numbers[col_number], delimiter);
-                if (column != NULL && column != "") {
+                if (column != NULL && strncmp(column, "", 1) != 0) {
                     found_column = 1;
                     printf("%s\t", column);
                 }
