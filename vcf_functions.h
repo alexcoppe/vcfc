@@ -4,3 +4,5 @@
 
 char *get_column(const char *, const int, const char *);
 int *sorted_int_array_from_str(char *);
+
+char **get_columns(const char *, const char *);

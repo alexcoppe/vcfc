@@ -1,6 +1,8 @@
 #include <string.h>  /* strcpy */
 #include <stdlib.h>  /* malloc */
 #include <stdio.h>   /* printf */
+#include "vcf_functions.h"
+#include <search.h>
 
 
 int compare_ints(const void *a, const void *b) {
@@ -83,3 +85,36 @@ char *get_column(const char *line, const int n, const char *delimiter_char) {
 }
 
 
+char **get_columns(const char *line, const char *delimiter_char) {
+    size_t l = strlen(line) + 2;
+    char *copied_line = (char *) malloc(l);
+    char *returned_line = NULL;
+    const char *delim = delimiter_char;
+    int colum_done = 0;
+    char *ptr = NULL;
+    int i = 0;
+
+    static char *returned_list[100] = {NULL};
+
+    strncpy(copied_line, line, l);
+
+    // If the delimiter is found in the string
+    if (strstr(copied_line, delim) != NULL) {
+        ptr = strtok(copied_line, delim);
+        
+        while (ptr != NULL) {
+            returned_line = (char *) malloc(strlen(ptr) + 1);
+            strcpy(returned_line, ptr);
+            returned_line[strcspn(returned_line, "\n")] = 0;
+            returned_list[i] = returned_line;
+            ptr = strtok(NULL, delim);
+            if (i == 99)
+                break;
+            i++;
+        }
+    } 
+
+    free(copied_line);
+
+    return returned_list;
+}
