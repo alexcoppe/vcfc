@@ -13,4 +13,4 @@ get_columns2.o:
 vcf_functions.o: vcf_functions.c vcf_functions.h
 	gcc $(CFLAGS) -c vcf_functions.c
 clean:
-	rm -f get_columns vcf_functions.o get_columns.o get_columns2 get_columns2
+	rm -f get_columns vcf_functions.o get_columns.o get_columns2 get_columns2 get_columns2.o
