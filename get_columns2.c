@@ -17,6 +17,7 @@ int main(int argc, char *argv[]){
     char *delimiter = NULL;
     char **row_fields;
     int row_fields_position;
+    int found_a_column = 0;
 
     /**//* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
@@ -75,15 +76,20 @@ int main(int argc, char *argv[]){
                 column = row_fields[row_fields_position - 1];
                 if (column) {
                     printf("%s\t", column);
+                    found_a_column = 1;
                 }
             }
         }
+
 
         for (int el = 0; el < 99; el++) {
             free(row_fields[el]);
             row_fields[el] = NULL;
         }
-        printf("\n");
+        if (found_a_column != 0)
+            printf("\n");
+
+        found_a_column = 0;
     }
 
     fclose(f);
