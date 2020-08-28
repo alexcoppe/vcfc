@@ -30,7 +30,6 @@ int main(int argc, char *argv[]){
                 puts(help);
                 return 1;
             case 'f':
-                /*col_number = atoi(optarg);*/
                 col_numbers = sorted_int_array_from_str(optarg);
                 break;
             case 'd':
@@ -67,7 +66,6 @@ int main(int argc, char *argv[]){
     if (delimiter == NULL)
         delimiter = "\t";
 
-
     while ((read = getline(&line, &n, f)) != -1) {
         row_fields = get_columns(line, delimiter);
 
@@ -75,16 +73,17 @@ int main(int argc, char *argv[]){
             row_fields_position = col_numbers[col_number];
             if (row_fields_position >= 1){
                 column = row_fields[row_fields_position - 1];
-                if (column != NULL) {
+                if (column) {
                     printf("%s\t", column);
                 }
             }
         }
-        printf("\n");
 
-        for (int el = 0; el <= 100; el++) {
+        for (int el = 0; el < 99; el++) {
             free(row_fields[el]);
+            row_fields[el] = NULL;
         }
+        printf("\n");
     }
 
     fclose(f);

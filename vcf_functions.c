@@ -27,7 +27,10 @@ int *sorted_int_array_from_str(char *s) {
 
     while (tok != NULL) {
         index = atoi(tok);
-        int_array[i] = index;
+        if (index < 100)
+            int_array[i] = index;
+        else
+            int_array[i] = 0;
         tok = strtok(NULL, ",");
         i++;
     }
@@ -40,7 +43,7 @@ int *sorted_int_array_from_str(char *s) {
 
 
 char *get_column(const char *line, const int n, const char *delimiter_char) {
-    size_t l = strlen(line) + 2;
+    size_t l = strlen(line) + 3;
     char *copied_line = (char *) malloc(l);
     char *returned_line = NULL;
     const char *delim = delimiter_char;
