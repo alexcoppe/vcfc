@@ -115,7 +115,8 @@ char **get_columns(const char *line, const char *delimiter_char) {
                 break;
             i++;
         }
-    } 
+    } else
+        exit(EXIT_FAILURE);
 
     free(copied_line);
 
