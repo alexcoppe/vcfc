@@ -16,8 +16,8 @@ typedef struct {
     int n_samples;
 } Variant;
 
-void print_variant(Variant *);
-
 void nice_print_variant(Variant *);
 
 Variant *get_variant_from_vcf_line(char *);
+
+void free_variant(Variant *);

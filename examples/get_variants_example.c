@@ -23,9 +23,10 @@ int main(int argc, char *argv[]){
             continue;
         var = get_variant_from_vcf_line(line);
         nice_print_variant(var);
+        free_variant(var);
     }
 
-    free(var);
+    free(line);
 
     return 0;
 }
