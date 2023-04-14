@@ -21,3 +21,9 @@ void nice_print_variant(Variant *);
 Variant *get_variant_from_vcf_line(char *);
 
 void free_variant(Variant *);
+
+char **get_format_fields(char *);
+
+int number_of_format_fields(char **);
+
+void delete_format_fields(char **);

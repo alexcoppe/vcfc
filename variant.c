@@ -88,3 +88,58 @@ void free_variant(Variant *variant) {
     free(variant);
 }
 
+char **get_format_fields(char *format){
+    size_t l = strlen(format) + 2;
+    char *copied_format = (char *) malloc(l);
+    char *ptr = NULL;
+    int i = 0;
+    char *subfield = NULL;
+
+    char **returned_list = (char **) malloc(10 * sizeof(char *));
+
+    for (int i = 0; i < 10; i++)
+        returned_list[i] = NULL;
+
+
+    /* Use strlcpy insteed of strncpy because is more secure */
+    strlcpy(copied_format, format, l);
+
+    // If the delimiter is found in the string
+    if (strstr(copied_format, ":") != NULL) {
+        ptr = strtok(copied_format, ":");
+        while (ptr != NULL) {
+            subfield = (char *) malloc(strlen(ptr) + 1);
+            strlcpy(subfield, ptr, strlen(ptr) + 1);
+            returned_list[i] = subfield;
+            ptr = strtok(NULL, ":");
+            if (i == 9)
+                break;
+            i++;
+        }
+    } else {
+        exit(EXIT_FAILURE);
+    }
+
+    free(copied_format);
+
+    return returned_list;
+}
+
+
+int number_of_format_fields(char **format_fields){
+    int i = 0;
+    int number_of_fields = 0;
+    while (format_fields[i]){
+        number_of_fields++;
+        i++;
+    }
+    return number_of_fields;
+}
+
+void delete_format_fields(char **format_fields){
+   for (int el = 0; el < 10; el++) {
+       free(format_fields[el]);
+       format_fields[el] = NULL;
+   }
+   free(format_fields);
+}

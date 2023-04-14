@@ -10,6 +10,7 @@ int main(int argc, char *argv[]){
     ssize_t read;
     size_t len = 0;
     char **row_fields;
+    char **format_fields;
 
     Variant *var;
 
@@ -22,7 +23,32 @@ int main(int argc, char *argv[]){
         if (line[0] == '#')
             continue;
         var = get_variant_from_vcf_line(line);
-        nice_print_variant(var);
+        format_fields = get_format_fields(var->format);
+
+        for (int i = 0; i < 10; i++){
+            if (format_fields[i])
+                printf("%s\n", format_fields[i]);
+            else
+                break;
+        }
+
+        delete_format_fields(format_fields);
+
+        char **sample = get_format_fields(var->samples[0]);
+
+        for (int i = 0; i < 10; i++){
+            if (sample[i])
+                printf("%s\n", sample[i]);
+            else
+                break;
+        }
+
+        delete_format_fields(sample);
+
+        /*for (int i = 0; i < 10; i++)*/
+        /*puts(format_fields[i]);*/
+        /*nice_print_variant(var);*/
+
         free_variant(var);
     }
 
