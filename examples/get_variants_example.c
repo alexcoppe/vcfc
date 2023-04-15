@@ -27,9 +27,9 @@ int main(int argc, char *argv[]){
 
         char **sample = get_format_fields(var->samples[0]);
 
-        /*printf("%s %i %s %s\n", var->chrom, var->pos, var->ref, var->alt);;*/
-        /*print_samples_info(var);*/
-        /*puts("");*/
+        printf("%s %i %s %s\n", var->chrom, var->pos, var->ref, var->alt);;
+        print_samples_info(var);
+        puts("");
 
         /*int number_of_samples = 0;*/
         /*while (number_of_samples < 100){*/
