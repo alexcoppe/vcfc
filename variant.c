@@ -143,3 +143,33 @@ void delete_format_fields(char **format_fields){
    }
    free(format_fields);
 }
+
+int n_of_samples(Variant *var){
+    int number_of_samples = 0;
+    while (number_of_samples < 100){
+        if (var->samples[number_of_samples] == NULL)
+            break;
+        else {
+            number_of_samples++;
+        }
+    }
+    return number_of_samples;
+}
+
+void print_samples_info(Variant *var){
+    char **format_fields;
+    char **sample;
+    int n =  n_of_samples(var);
+    format_fields = get_format_fields(var->format);
+    int n_format_fields =  number_of_format_fields(format_fields);
+    for (int i = 0; i < n_format_fields; i++){
+        printf("%s ", format_fields[i]);
+        for (int j = 0; j < n; j++){
+            sample = get_format_fields(var->samples[j]);
+            printf("%s ", sample[i]);
+            delete_format_fields(sample);
+        }
+        puts("");
+    }
+    delete_format_fields(format_fields);
+}
