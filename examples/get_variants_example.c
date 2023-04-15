@@ -25,29 +25,33 @@ int main(int argc, char *argv[]){
         var = get_variant_from_vcf_line(line);
         format_fields = get_format_fields(var->format);
 
-        for (int i = 0; i < 10; i++){
-            if (format_fields[i])
-                printf("%s\n", format_fields[i]);
-            else
-                break;
-        }
-
-        delete_format_fields(format_fields);
-
         char **sample = get_format_fields(var->samples[0]);
 
-        for (int i = 0; i < 10; i++){
-            if (sample[i])
-                printf("%s\n", sample[i]);
-            else
-                break;
-        }
+        /*printf("%s %i %s %s\n", var->chrom, var->pos, var->ref, var->alt);;*/
+        /*print_samples_info(var);*/
+        /*puts("");*/
 
+        /*int number_of_samples = 0;*/
+        /*while (number_of_samples < 100){*/
+        /*if (var->samples[number_of_samples] == NULL)*/
+        /*break;*/
+        /*else {*/
+        /*number_of_samples++;*/
+        /*}*/
+        /*}*/
+        /*printf("%d\n", number_of_samples);*/
+
+        /*for (int i = 0; i < 10; i++){*/
+        /*if (sample[i])*/
+        /*printf("%s\n", sample[i]);*/
+        /*else*/
+        /*break;*/
+        /*}*/
+
+        /*printf("%d\n", n_of_samples(var));*/
+
+        delete_format_fields(format_fields);
         delete_format_fields(sample);
-
-        /*for (int i = 0; i < 10; i++)*/
-        /*puts(format_fields[i]);*/
-        /*nice_print_variant(var);*/
 
         free_variant(var);
     }

@@ -27,3 +27,7 @@ char **get_format_fields(char *);
 int number_of_format_fields(char **);
 
 void delete_format_fields(char **);
+
+int n_of_samples(Variant *);
+
+void print_samples_info(Variant *);
