@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include"krhashtable.h"
 
 typedef struct {
     char *chrom;
@@ -14,7 +15,10 @@ typedef struct {
     char *format;
     char *samples[100];
     int n_samples;
+
+    struct info_fields_hasht *hashtab[HASHSIZE];
 } Variant;
+
 
 void nice_print_variant(Variant *);
 
@@ -31,3 +35,5 @@ void delete_format_fields(char **);
 int n_of_samples(Variant *);
 
 void print_samples_info(Variant *);
+
+void get_info_field(char *, struct info_fields_hasht **);

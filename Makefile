@@ -6,12 +6,14 @@ get_columns: get_columns.o vcf_functions.o
 	gcc get_columns.o vcf_functions.o -o get_columns
 get_columns2: get_columns2.o vcf_functions.o
 	gcc get_columns2.o vcf_functions.o -o get_columns2
-get_variants_example: get_variants_example.o variant.o
-	gcc get_variants_example.o variant.o -o get_variants_example
+get_variants_example: get_variants_example.o variant.o krhashtable.o
+	gcc get_variants_example.o variant.o krhashtable.o -o get_variants_example
 get_columns.o: get_columns.c
 	gcc $(CFLAGS) -c get_columns.c
 get_columns2.o:
 	gcc $(CFLAGS) -c get_columns2.c
+krhashtable.o:
+	gcc $(CFLAGS) -c krhashtable.c
 vcf_functions.o: vcf_functions.c vcf_functions.h
 	gcc $(CFLAGS) -c vcf_functions.c
 get_pass_variants: get_vcf_field.o get_pass_variants.o

@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "vcf_functions.c"
-#include "variant.h"
+#include<assert.h>
+#include"vcf_functions.c"
+#include"variant.h"
 
 
 void nice_print_variant(Variant *variant){
@@ -173,3 +174,73 @@ void print_samples_info(Variant *var){
     }
     delete_format_fields(format_fields);
 }
+
+void get_info_field(char *info, struct info_fields_hasht **damnhash){
+    size_t l = strlen(info) + 2;
+    char *copied_info = (char *) malloc(l);
+    char *ptr = NULL;
+    char *subfield = NULL;
+    char *key = NULL;
+    char *value = NULL;
+    int i = 0;
+    int number_of_equals = 0;
+
+    /* Use strlcpy insteed of strncpy because is more secure */
+    strlcpy(copied_info, info, l);
+
+    char *end_token = NULL;
+    char *token2 = NULL;
+    char *end_token2 = NULL;
+    int equal_side = 0;
+    char *sub_token2 = NULL;
+    char *subfield2 = NULL;
+    
+    // If the delimiter is found in the string
+    if (strstr(copied_info, ";") != NULL) {
+        ptr = strtok_r(copied_info, ";", &end_token);
+        while (ptr != NULL) {
+            subfield = (char *) malloc(strlen(ptr) + 1);
+            strlcpy(subfield, ptr, strlen(ptr) + 1);
+
+            number_of_equals = 0;
+            for (int i = 0; i < strlen(subfield); i++)
+                if (subfield[i] == '=')
+                    number_of_equals++;
+
+            if (number_of_equals == 0){
+                key = (char *) malloc(strlen(subfield) + 1);
+                strlcpy(key, subfield, strlen(subfield) + 1);
+                value = (char *) malloc(strlen(subfield) + 1);
+                strlcpy(value, subfield, strlen(subfield) + 1);
+            }  else if (number_of_equals == 1){
+                equal_side = 0;
+                token2 = strtok_r(ptr, "=", &end_token2);
+                while (token2 != NULL){
+                    subfield2 = (char *) malloc(strlen(token2) + 1);
+                    strlcpy(subfield2, token2, strlen(token2) + 1);
+                    if (equal_side == 0 ){
+                        key = (char *) malloc(strlen(subfield2) + 1);
+                        strlcpy(key, token2, strlen(subfield2) + 1);
+                    } else if (equal_side == 1){
+                        value = (char *) malloc(strlen(subfield2) + 1);
+                        strlcpy(value, token2, strlen(subfield2) + 1);
+                    }
+                    equal_side++;
+
+                    token2 = strtok_r(NULL, "=", &end_token2);
+                    free(subfield2);
+                }
+            }
+            install(key, value, damnhash);
+            free(value);
+            free(key);
+
+            ptr = strtok_r(NULL, ";", &end_token);
+            free(subfield);
+        }
+    }
+
+    free(ptr);
+    free(copied_info);
+}
+
