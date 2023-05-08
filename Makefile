@@ -29,4 +29,5 @@ variant.o: variant.c
 clean:
 	rm -f get_columns vcf_functions.o get_columns.o get_columns2 get_columns2 get_columns2.o \
 		get_vcf_field.o get_pass_variants.o get_pass_variants \
-		get_variants_example.o variant.o get_variants_example
+		get_variants_example.o variant.o get_variants_example \
+		krhashtable.o
