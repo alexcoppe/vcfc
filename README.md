@@ -26,7 +26,7 @@ The following table shows the available functions. If you want to see a detailed
 
 ## get_columns2
 
-Shows only the columns you choose from a cvs file. Does not work on a .vcf file (as it has meta-information lines e.g. ##fileformat=VCFv4.2)  
+Shows only the columns you choose from a multi columns file (usually named cvs file). You have to choose the columns by numbers using the -f parameter. It works on a .vcf file and does not shows meta-information lines e.g. ##fileformat=VCFv4.2. 
 
 Option | What does it do
 ------------ | -------------
@@ -41,7 +41,7 @@ Option | What does it do
 
 ## get_pass_variants
 
-This program filters a VCF file showing only the ones with PASS in the FILTER field.
+This program filters a VCF file showing only the ones with PASS (annotated by [SnpEff](https://pcingola.github.io/SnpEff/)) in the FILTER field.
 
 Option | What does it do
 ------------ | -------------
