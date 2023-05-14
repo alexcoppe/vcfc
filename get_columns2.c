@@ -19,6 +19,7 @@ int main(int argc, char *argv[]){
     int row_fields_position;
     int found_a_column = 0;
 
+
     /**//* Help string */
     char help[] = "Usage: get_pass_variants [OPTION]... VCF_file\n  "
         "-h\tshow help options\n  "
@@ -67,7 +68,12 @@ int main(int argc, char *argv[]){
     if (delimiter == NULL)
         delimiter = "\t";
 
+
     while ((read = getline(&line, &n, f)) != -1) {
+
+        if (strncmp(line, "#", 1) == 0)
+            continue;
+
         row_fields = get_columns(line, delimiter);
 
         for (col_number = 0; col_number < 99; col_number++) {
