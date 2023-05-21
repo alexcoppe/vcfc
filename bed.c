@@ -42,11 +42,11 @@ BedEntry *bed_entries(char *file_path){
                 }
             }
         }
-        /*if (number_of_separators != 2){*/
-        /*fprintf(stderr, "The %s is not a bed file\n", file_path);*/
-        /*exit(EXIT_FAILURE);*/
-        /*}*/
-        /*number_of_separators = 0;*/
+        if (number_of_separators < 2){
+            fprintf(stderr, "The %s is not a bed file\n", file_path);
+            exit(EXIT_FAILURE);
+        }
+        number_of_separators = 0;
 
         BedEntry entry;
 
