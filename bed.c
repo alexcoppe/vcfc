@@ -2,14 +2,10 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
+#include "bed.h"
 
 #define MAX_LINE_LENGTH 10000
 
-typedef struct {
-    char chromosome[20];
-    int start;
-    int end;
-} BedEntry;
 
 void printBedEntry(BedEntry be){
     printf("%s\t%d\t%d\n", be.chromosome, be.start, be.end);
@@ -62,19 +58,4 @@ BedEntry *bed_entries(char *file_path){
     return bedEntries;
 }
 
-int main(int argc, char *argv[]){
-    BedEntry *wanted_ranges = {NULL};
-    int i = 0;
-    char c;
 
-    wanted_ranges =  bed_entries(argv[1]);
-
-    while (wanted_ranges[i].chromosome[0]){
-        printBedEntry(wanted_ranges[i]);
-        i++;
-    }
-
-    free(wanted_ranges);
-
-    return 0;
-}
