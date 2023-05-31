@@ -8,18 +8,24 @@
 int main(int argc, char *argv[]){
     BedEntry *wanted_ranges = {NULL};
     int i = 0;
-    char c;
     ssize_t read;
     char *line = NULL;
     size_t len = 0;
     FILE *file = NULL;
-    char chromosome[10];
+    char chromosome[20];
     int position;
     int opt;
     int header = 0;
 
-    while ((opt = getopt(argc, argv, "a")) != -1){
+    char help[] = "Usage: filter_vcf_by_bed [OPTION]... BED_file VCF_file\n  "
+        "-h\tshow help options\n  "
+        "-a\tshow the header in the filtered VCF";
+
+    while ((opt = getopt(argc, argv, "ah")) != -1){
         switch (opt){
+            case 'h':
+                puts(help);
+                return 1;
             case 'a':
                 header = 1;
                 break;
