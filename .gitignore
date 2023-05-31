@@ -1,5 +1,5 @@
 # swp files from vim
-.*.swp
+*.swp
 #
 #
 # Prerequisites
@@ -54,3 +54,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
+*.swn
+*.swo
+
+
+filter_vcf_by_bed
+get_columns
+get_columns2
+get_variants_example
