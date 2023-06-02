@@ -9,20 +9,7 @@ cd vcfc
 make
 ```
 
-
-# Functions available 📚:
-
-The following table shows the available functions. If you want to see a detailed description of the functions go to the [library documentation](docs/library.md) page.
-
-| Function        | Description|
-| ------------- |:-------------|
-|[get_variant_from_vcf_line](docs/library.md)|reads a single line from a VCF file and returns a Variant struct|
-|[free_variant](docs/library.md)|frees the memory allocatated by the get_variant_from_vcf_line|
-|[nice_print_variant](docs/library.md)|prints all the fields from a Variant struct|
-|[get_format_fields](docs/library.md)|takes as input a pointer to a format string (var->format) or a sample string (like var->samples[0]) gotten from the Variant struct and returns an array of pointers to the format or sample fields|
-
-
-# Programs available
+# Programs available :man_technologist:
 
 ## get_columns2
 
@@ -52,3 +39,26 @@ Option | What does it do
 ```console
 >>> get_pass_variants mutations.vcf
 ```
+## filter_vcf_by_bed
+
+Filter a VCF file using a BED file.
+
+Option | What does it do
+------------ | -------------
+-h | Show help
+-a | show the header in the filtered VCF
+
+```console
+>>> filter_vcf_by_bed -a sample.bed variants.vcf
+```
+# Functions available 📚:
+
+The following table shows the available functions. If you want to see a detailed description of the functions go to the [library documentation](docs/library.md) page.
+
+| Function        | Description|
+| ------------- |:-------------|
+|[bed_entries](docs/library.md)|reads a file and returns an array of BedEntry pointers. Use a single free call to free the array|
+|[get_format_fields](docs/library.md)|takes as input a pointer to a format string (var->format) or a sample string (like var->samples[0]) gotten from the Variant struct and returns an array of pointers to the format or sample fields|
+|[get_variant_from_vcf_line](docs/library.md)|reads a single line from a VCF file and returns a Variant struct|
+|[free_variant](docs/library.md)|frees the memory allocatated by the get_variant_from_vcf_line|
+|[nice_print_variant](docs/library.md)|prints all the fields from a Variant struct|
