@@ -1,5 +1,30 @@
 # vcfc library functions :books:
 
+### :bookmark: _bed_entries_
+
+SYNOPSIS:
+
+```C
+
+#include "bed.h"
+
+BedEntry *
+bed_entries(char *file_path);
+
+void
+free(BedEntry *)
+```
+
+DESCRIPTION:
+
+The _bed_entries_ function reads a file and returns an array of BeEntry structs pointers. The only parameter needed is the path to the BED file. The _free_ function is used to free the array returned by the _bed_entries_ function.
+
+RETURN VALUES:
+
+The _bed_entries_ returns an array of BeEntry structs pointers
+
+------
+
 ### :bookmark: _get_variant_from_vcf_line_ and _free_variant_
   
 SYNOPSIS:
