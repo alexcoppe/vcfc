@@ -23,11 +23,7 @@ typedef struct {
 } Snpeff_ANN;
 
 
-/*void get_snpeff_subfields(char *);*/
 char ** get_snpeff_subfields(char *);
-
-char **f2(char *);
-/*void f2(char *);*/
 
 Snpeff_ANN get_snpeff_annotation_field(char *);
 

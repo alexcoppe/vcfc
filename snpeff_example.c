@@ -34,9 +34,8 @@ int main(int argc, char *argv[]){
                 if (ANN->value[z] == ',')
                     number_of_subfields++;
             }
-            ann_subfields = f2(ANN->value);
+            ann_subfields = get_snpeff_subfields(ANN->value);
 
-            /*printf("%d\n", number_of_subfields);*/
             if (number_of_subfields == 1){
                 printf("%s\n", ann_subfields[0]);
             } else {
@@ -44,13 +43,13 @@ int main(int argc, char *argv[]){
                     puts(ann_subfields[w]);
                 }
             }
-            number_of_subfields = 1;
 
-            for (int i = 0; i <= number_of_subfields + 100; i++){
+            for (int i = 0; i < number_of_subfields; i++){
                 free(ann_subfields[i]);
             }
             free(ann_subfields);
 
+            number_of_subfields = 1;
         }
 
         free_variant(var);
