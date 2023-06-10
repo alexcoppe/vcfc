@@ -23,6 +23,109 @@ void show_snpeff_annotation_field(Snpeff_ANN s){
     puts("");
 }
 
+
+char **get_snpeff_subfields(char *fields){
+    int l;
+    char *ptr = NULL;
+    char *subfield = NULL;
+    Snpeff_ANN annotation;
+    int i = 0;
+    int j = 0;
+    /*Snpeff_ANN *array_of_sub_fields[200] = {NULL};*/
+    int number_of_subfields = 0;
+    char **subfields;
+    int comma = 0;
+
+    for (j = 0; j < strlen(fields); j++){
+        if (fields[j] == ',')
+            comma++;
+    }
+    /*printf("%d\n", comma);*/
+
+    /*To bee free*/
+    char **array_of_subfields = malloc((comma + 2) * sizeof(char *));
+
+    l = strlen(fields) + 2;
+    char *copied_format = NULL;
+    /*printf("%s\n\n", fields);*/
+    /* Use strlcpy insteed of strncpy because is more secure */
+    copied_format = (char *) malloc(l);
+    strlcpy(copied_format, fields, l);
+    /*puts(copied_format);*/
+    // If the delimiter is found in the string
+    int array_of_subfields_i = 0;
+    if (strstr(copied_format, ",") != NULL) {
+        ptr = strtok(copied_format, ",");
+        while (ptr != NULL) {
+            subfield = (char *) malloc(strlen(ptr) + 2);
+            strlcpy(subfield, ptr, strlen(ptr) + 2);
+            /*puts(subfield);*/
+            /*printf("%d\n", array_of_subfields_i);*/
+            array_of_subfields[array_of_subfields_i] = subfield;
+            /*printf("%s\n", array_of_subfields[array_of_subfields_i]);*/
+            /*printf("%d\n", array_of_subfields_i);*/
+            array_of_subfields_i++;
+            /*i++;*/
+            /*printf("%s\n", subfield);*/
+            ptr = strtok(NULL, ",");
+            /*annotation = get_snpeff_annotation_field(subfield);*/
+    /**//*printf("%s %d\n", var->chrom, var->pos);*/
+    /**//*show_snpeff_annotation_field(annotation);*/
+            /*array_of_sub_fields[i] = &annotation;*/
+            /*number_of_subfields++;*/
+            /*free(subfield);*/
+            /*if (i == 14)*/
+            /*break;*/
+            i++;
+        }
+    }
+
+
+    free(copied_format);
+
+    /*printf("------ %d\n", array_of_subfields_i);*/
+
+    /*j = 0;*/
+    /*while (j < (comma - 1)){*/
+        /*printf("%s\n", array_of_subfields[0]);*/
+    /*j++;*/
+    /*}*/
+
+    return array_of_subfields;
+}
+
+
+char **f2(char *string){
+    size_t l = strlen(string) + 2;
+    char *copied_info = (char *) malloc(l);
+    char *token;
+    char **list_of_tokens = (char **) malloc(100 * sizeof(char *));
+    int list_position = 0;
+    char *positioned_string;
+    size_t l2 = 0;
+    int j = 0;
+
+    strlcpy(copied_info, string, l);
+
+    token = strtok(copied_info, ",");
+                                                                   
+
+    while( token != NULL ) {
+        l2 = strlen(token);
+        positioned_string = (char *) malloc(l2 + 2);
+        strlcpy(positioned_string, token, l2);
+        list_of_tokens[j] = positioned_string;
+        j++;
+        token = strtok(NULL, ",");
+    }
+
+    free(copied_info);
+
+    return list_of_tokens;
+
+}
+
+
 Snpeff_ANN get_snpeff_annotation_field(char *single_annotation){
     int i = 0;
     int j = 0;

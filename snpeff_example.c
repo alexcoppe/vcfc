@@ -9,15 +9,9 @@ int main(int argc, char *argv[]){
     FILE *file = NULL;
     ssize_t read;
     size_t len = 0;
-    char **format_fields;
     struct info_fields_hasht *ANN = NULL;
-    size_t l = 0;
-    char *copied_format = NULL;
-    char *ptr = NULL;
-    int i = 1;
-    char *subfield = NULL;
-    Snpeff_ANN annotation;
-
+    char **ann_subfields;
+    int number_of_subfields = 1;
     Variant *var;
 
     static struct info_fields_hasht *damnhash[HASHSIZE];
@@ -27,37 +21,36 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
 
-
     while ((read = getline(&line, &len, file)) != -1) {
         if (line[0] == '#')
             continue;
+
         var = get_variant_from_vcf_line(line);
 
         get_info_field(var->info, damnhash);
         ANN = lookup("ANN", damnhash);
         if (ANN != NULL){
-            l = strlen(ANN->value) + 2;
+            for (int z = 0; z < strlen(ANN->value); z++){
+                if (ANN->value[z] == ',')
+                    number_of_subfields++;
+            }
+            ann_subfields = f2(ANN->value);
 
-            /* Use strlcpy insteed of strncpy because is more secure */
-            copied_format = (char *) malloc(l);
-            strlcpy(copied_format, ANN->value, l);
-            // If the delimiter is found in the string
-            if (strstr(copied_format, ",") != NULL) {
-                ptr = strtok(copied_format, ",");
-                while (ptr != NULL) {
-                    subfield = (char *) malloc(strlen(ptr) + 2);
-                    strlcpy(subfield, ptr, strlen(ptr) + 2);
-                    ptr = strtok(NULL, ",");
-                    annotation = get_snpeff_annotation_field(subfield);
-                    show_snpeff_annotation_field(annotation);
-                    printf("%s %d\n", var->chrom, var->pos);
-                    free(subfield);
-                    if (i == 14)
-                        break;
-                    i++;
+            /*printf("%d\n", number_of_subfields);*/
+            if (number_of_subfields == 1){
+                printf("%s\n", ann_subfields[0]);
+            } else {
+                for (int w = 1; w < number_of_subfields; w++){
+                    puts(ann_subfields[w]);
                 }
             }
-            free(copied_format);
+            number_of_subfields = 1;
+
+            for (int i = 0; i <= number_of_subfields + 100; i++){
+                free(ann_subfields[i]);
+            }
+            free(ann_subfields);
+
         }
 
         free_variant(var);
