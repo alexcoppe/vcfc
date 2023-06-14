@@ -13,6 +13,7 @@ int main(int argc, char *argv[]){
     char **ann_subfields;
     int number_of_subfields = 1;
     Variant *var;
+    Snpeff_ANN *snpeffann;
 
     static struct info_fields_hasht *damnhash[HASHSIZE];
 
@@ -37,10 +38,16 @@ int main(int argc, char *argv[]){
             ann_subfields = get_snpeff_subfields(ANN->value);
 
             if (number_of_subfields == 1){
-                printf("%s\n", ann_subfields[0]);
+                snpeffann = get_snpeff_annotation_field(ann_subfields[0]);
+                show_snpeff_annotation_field(snpeffann);
+                reset_Snpeff_ANN(snpeffann);
+                free(snpeffann);
             } else {
                 for (int w = 1; w < number_of_subfields; w++){
-                    puts(ann_subfields[w]);
+                    snpeffann = get_snpeff_annotation_field(ann_subfields[w]);
+                    show_snpeff_annotation_field(snpeffann);
+                    reset_Snpeff_ANN(snpeffann);
+                    free(snpeffann);
                 }
             }
 
