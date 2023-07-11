@@ -116,6 +116,8 @@ Snpeff_ANN *get_snpeff_annotation_field(char *single_annotation){
             strlcpy(snpeffann->Distance_to_feature, s, strlen(s) + 1);
         }
 
+        snpeffann->next = NULL;
+
         free(s);
 
         i++;

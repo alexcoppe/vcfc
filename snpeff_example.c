@@ -1,8 +1,19 @@
 #include <string.h> 
 #include <stdlib.h>
 #include <stdio.h>
-#include "snpeff.h"
 #include "variant.h"
+
+void display(Snpeff_ANN *s){
+    Snpeff_ANN *n = s;
+    int i = 0;
+
+    while (n != NULL){
+        show_snpeff_annotation_field(n);
+        /*printf("%i\n", i);*/
+        i++;
+        n = n->next;
+    }
+}
 
 int main(int argc, char *argv[]){
     char *line = NULL;
@@ -13,7 +24,6 @@ int main(int argc, char *argv[]){
     char **ann_subfields;
     int number_of_subfields = 1;
     Variant *var;
-    Snpeff_ANN *snpeffann;
 
     static struct info_fields_hasht *damnhash[HASHSIZE];
 
@@ -30,36 +40,55 @@ int main(int argc, char *argv[]){
 
         get_info_field(var->info, damnhash);
         ANN = lookup("ANN", damnhash);
+
+        Snpeff_ANN *start = NULL;
+        Snpeff_ANN *i = NULL;
+        Snpeff_ANN *next = NULL;
+
+
         if (ANN != NULL){
+
             for (int z = 0; z < strlen(ANN->value); z++){
                 if (ANN->value[z] == ',')
                     number_of_subfields++;
             }
+
+
             ann_subfields = get_snpeff_subfields(ANN->value);
 
+
             if (number_of_subfields == 1){
-                snpeffann = get_snpeff_annotation_field(ann_subfields[0]);
-                show_snpeff_annotation_field(snpeffann);
-                reset_Snpeff_ANN(snpeffann);
-                free(snpeffann);
+                var->snpeffann = get_snpeff_annotation_field(ann_subfields[0]);
             } else {
-                for (int w = 1; w < number_of_subfields; w++){
-                    snpeffann = get_snpeff_annotation_field(ann_subfields[w]);
-                    show_snpeff_annotation_field(snpeffann);
-                    reset_Snpeff_ANN(snpeffann);
-                    free(snpeffann);
+                for (int w = 0; w < number_of_subfields - 1; w++){
+                    if (w == 0){
+                        var->snpeffann = get_snpeff_annotation_field(ann_subfields[w]);
+                        i = var->snpeffann;
+                    }
+                    else{
+                        next = get_snpeff_annotation_field(ann_subfields[w]);
+                        i->next = next;
+                        i = next;
+                        /*printf("W: %s ------- %d\n", i->next->Gene_ID, w);*/
+                    }
                 }
             }
 
-            for (int i = 0; i < number_of_subfields; i++){
-                free(ann_subfields[i]);
+
+            display(var->snpeffann);
+
+            for (int j = 0; j < number_of_subfields; j++){
+                free(ann_subfields[j]);
             }
             free(ann_subfields);
 
-            number_of_subfields = 1;
+            /*free_variant(var, number_of_subfields + 1);*/
+
+            /*number_of_subfields = 1;*/
         }
 
         free_variant(var);
+        number_of_subfields = 1;
     }
 
     free(line);

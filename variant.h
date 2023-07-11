@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include"krhashtable.h"
+#include"snpeff.h"
 
 typedef struct {
     char *chrom;
@@ -17,6 +18,9 @@ typedef struct {
     int n_samples;
 
     struct info_fields_hasht *hashtab[HASHSIZE];
+
+    /*Snpeff_ANN **snpeffann;*/
+    Snpeff_ANN *snpeffann;
 } Variant;
 
 

@@ -5,7 +5,6 @@
 #include"vcf_functions.c"
 #include"variant.h"
 
-
 void nice_print_variant(Variant *variant){
     printf("CHROM: %s\n", variant->chrom);
     printf("POS: %i\n", variant->pos);
@@ -80,12 +79,34 @@ void free_variant(Variant *variant) {
     free(variant->filter);
     free(variant->info);
     free(variant->format);
+
+
+    /*free(variant->snpeffann);*/
+    /*Snpeff_ANN *i = variant->snpeffann;*/
+    /*Snpeff_ANN *next = NULL;*/
+    /*reset_Snpeff_ANN(variant->snpeffann);*/
+
+    /*while (i->next != NULL){*/
+        /*next = i->next;*/
+        /*free(i);*/
+        /*i = next;*/
+        /*i = i->next;*/
+    /*}*/
+
     for (int i = 0; i < 100; i++){
         if (variant->samples[i]) {
             free(variant->samples[i]);
         }
     }
     
+    /*while (i != NULL){*/
+    /*next = i->next;*/
+    /*free(i);*/
+    /*i = next;*/
+    /*}*/
+
+    /*free(next);*/
+
     free(variant);
 }
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct {
+typedef struct Snpeff_ANN {
     char *ALT;
     char *Annotation;
     char *Putative_impact;
@@ -19,6 +19,8 @@ typedef struct {
     char *Protein_position_Protein_len;
     char *Distance_to_feature;
     char *Errors;
+
+    struct Snpeff_ANN *next;
 } Snpeff_ANN;
 
 
