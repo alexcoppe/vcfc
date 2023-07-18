@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "variant.h"
+#include "snpeff.h"
+#include "krhashtable.h"
 
 void display(Snpeff_ANN *s){
     Snpeff_ANN *n = s;
@@ -53,41 +55,55 @@ int main(int argc, char *argv[]){
                     number_of_subfields++;
             }
 
+            /*if (number_of_subfields == 1)*/
+            /*printf("%s\n\n", ANN->value);*/
+
 
             ann_subfields = get_snpeff_subfields(ANN->value);
 
 
             if (number_of_subfields == 1){
                 var->snpeffann = get_snpeff_annotation_field(ann_subfields[0]);
+                /*printf("%i\n", number_of_subfields);*/
+                /*show_snpeff_annotation_field(var->snpeffann);*/
             } else {
                 for (int w = 0; w < number_of_subfields - 1; w++){
                     if (w == 0){
                         var->snpeffann = get_snpeff_annotation_field(ann_subfields[w]);
                         i = var->snpeffann;
+                        /*show_snpeff_annotation_field(var->snpeffann);*/
                     }
                     else{
                         next = get_snpeff_annotation_field(ann_subfields[w]);
                         i->next = next;
                         i = next;
+                        /*show_snpeff_annotation_field(var->snpeffann);*/
                         /*printf("W: %s ------- %d\n", i->next->Gene_ID, w);*/
                     }
                 }
             }
 
+            Snpeff_ANN *zf = var->snpeffann;
+            while (zf != NULL){
+                show_snpeff_annotation_field(zf);
+                zf = zf->next;
+            }
 
-            display(var->snpeffann);
+
+
+            /*display(var->snpeffann);*/
 
             for (int j = 0; j < number_of_subfields; j++){
                 free(ann_subfields[j]);
             }
             free(ann_subfields);
 
-            /*free_variant(var, number_of_subfields + 1);*/
+            free_variant(var);
 
             /*number_of_subfields = 1;*/
         }
 
-        free_variant(var);
+        /*free_variant(var);*/
         number_of_subfields = 1;
     }
 

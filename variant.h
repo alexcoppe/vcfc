@@ -2,9 +2,11 @@
 #include<stdlib.h>
 #include<string.h>
 #include"krhashtable.h"
-#include"snpeff.h"
 
-typedef struct {
+#ifndef SNPEFF_H
+#define SNPEFF_H
+
+typedef struct Variant {
     char *chrom;
     int pos;
     char *id;
@@ -20,9 +22,11 @@ typedef struct {
     struct info_fields_hasht *hashtab[HASHSIZE];
 
     /*Snpeff_ANN **snpeffann;*/
-    Snpeff_ANN *snpeffann;
+    /*struct Snpeff_ANN *snpeffann;*/
+    struct Snpeff_ANN *snpeffann;
 } Variant;
 
+#endif
 
 void nice_print_variant(Variant *);
 

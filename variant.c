@@ -4,6 +4,7 @@
 #include<assert.h>
 #include"vcf_functions.c"
 #include"variant.h"
+#include"snpeff.h"
 
 void nice_print_variant(Variant *variant){
     printf("CHROM: %s\n", variant->chrom);
@@ -81,23 +82,30 @@ void free_variant(Variant *variant) {
     free(variant->format);
 
 
-    /*free(variant->snpeffann);*/
-    /*Snpeff_ANN *i = variant->snpeffann;*/
-    /*Snpeff_ANN *next = NULL;*/
+    struct Snpeff_ANN *i = variant->snpeffann;
+    struct Snpeff_ANN *next = NULL;
+
     /*reset_Snpeff_ANN(variant->snpeffann);*/
 
-    /*while (i->next != NULL){*/
-        /*next = i->next;*/
-        /*free(i);*/
+    while (i != NULL){
+        printf("%s\t%s\t%s\n", i->Putative_impact, i->Feature_ID, i->Gene_ID);
+        next = i->next;
+        reset_Snpeff_ANN(i);
         /*i = next;*/
         /*i = i->next;*/
+        i = next;
+    }
+
+    /*reset_Snpeff_ANN(i);*/
+
+    /*for (int i = 0; i < 100; i++){*/
+    /*if (variant->samples[i]) {*/
+    /*free(variant->samples[i]);*/
+    /*}*/
     /*}*/
 
-    for (int i = 0; i < 100; i++){
-        if (variant->samples[i]) {
-            free(variant->samples[i]);
-        }
-    }
+
+    /*free(variant->snpeffann);*/
     
     /*while (i != NULL){*/
     /*next = i->next;*/

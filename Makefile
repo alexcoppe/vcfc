@@ -2,16 +2,18 @@ CFLAGS=-I.
 
 all: get_columns2 get_columns get_pass_variants get_variants_example get_columns2 filter_vcf_by_bed snpeff_example
 
-snpeff_example: snpeff_example.o snpeff.o variant.o krhashtable.o
-	gcc snpeff_example.o snpeff.o variant.o krhashtable.o -o snpeff_example
+snpeff_example: snpeff_example.o snpeff.o krhashtable.o variant.o
+	gcc snpeff_example.o snpeff.o krhashtable.o variant.o -o snpeff_example
 get_columns: get_columns.o vcf_functions.o
 	gcc get_columns.o vcf_functions.o -o get_columns
-get_variants_example: get_variants_example.o variant.o krhashtable.o
-	gcc get_variants_example.o variant.o krhashtable.o -o get_variants_example
+get_variants_example: get_variants_example.o variant.o krhashtable.o snpeff.o
+	gcc get_variants_example.o variant.o krhashtable.o snpeff.o  -o get_variants_example
 filter_vcf_by_bed: filter_vcf_by_bed.o bed.o
 	gcc filter_vcf_by_bed.o bed.o -o filter_vcf_by_bed
 get_columns.o: get_columns.c
 	gcc $(CFLAGS) -c get_columns.c
+snpeff.o: snpeff.c
+	gcc $(CFLAGS) -c snpeff.c
 get_columns2.o:
 	gcc $(CFLAGS) -c get_columns2.c
 get_columns2: get_columns2.o vcf_functions.o
@@ -34,8 +36,6 @@ bed.o: bed.c
 	gcc $(CFLAGS) -c bed.c
 filter_vcf_by_bed.o: filter_vcf_by_bed.c
 	gcc $(CFLAGS) -c filter_vcf_by_bed.c
-snpeff.o: snpeff.c
-	gcc $(CFLAGS) -c snpeff.c
 snpeff_example.o: snpeff_example.c
 	gcc $(CFLAGS) -c snpeff_example.c
 clean:

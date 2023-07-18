@@ -1,7 +1,7 @@
 #include <string.h> 
 #include <stdlib.h>
 #include <stdio.h>
-#include <snpeff.h>
+#include "snpeff.h"
 
 void show_snpeff_annotation_field(Snpeff_ANN *s){
     printf("ALT: %s\n", s->ALT);

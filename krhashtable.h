@@ -5,11 +5,17 @@
 #define HASHSIZE 101
 
 
+#ifndef SNPEFF_EXAMPLE_H
+#define SNPEFF_EXAMPLE_H
+
 struct info_fields_hasht {
     struct info_fields_hasht *next;
     char *key;
     char *value;
 };
+
+#endif
+
 
 void print_info_fields_hasht(struct info_fields_hasht *);
 
