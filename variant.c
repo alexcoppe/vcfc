@@ -28,7 +28,6 @@ Variant *get_variant_from_vcf_line(char *vcf_line){
     Variant *snp = malloc(sizeof(Variant));
     char **row_fields;
     row_fields = get_columns(vcf_line, "\t");
-    /*static char *samples[100] = {NULL};*/
     static char *samples[100];
     for (int i = 0; i < 100; i++)
         samples[i] = NULL;
@@ -81,39 +80,28 @@ void free_variant(Variant *variant) {
     free(variant->info);
     free(variant->format);
 
+    if (variant->snpeffann->next == NULL){
+        reset_Snpeff_ANN(variant->snpeffann);;
+    } else {
+        struct Snpeff_ANN *i = variant->snpeffann;
 
-    struct Snpeff_ANN *i = variant->snpeffann;
-    struct Snpeff_ANN *next = NULL;
+        struct Snpeff_ANN *next = NULL;
 
-    /*reset_Snpeff_ANN(variant->snpeffann);*/
+        while (i->next != NULL){
+            next = i->next;
+            reset_Snpeff_ANN(i);
+            i = next;
+        }
 
-    while (i != NULL){
-        printf("%s\t%s\t%s\n", i->Putative_impact, i->Feature_ID, i->Gene_ID);
-        next = i->next;
-        reset_Snpeff_ANN(i);
-        /*i = next;*/
-        /*i = i->next;*/
-        i = next;
+        reset_Snpeff_ANN(next);
+
     }
 
-    /*reset_Snpeff_ANN(i);*/
-
-    /*for (int i = 0; i < 100; i++){*/
-    /*if (variant->samples[i]) {*/
-    /*free(variant->samples[i]);*/
-    /*}*/
-    /*}*/
-
-
-    /*free(variant->snpeffann);*/
-    
-    /*while (i != NULL){*/
-    /*next = i->next;*/
-    /*free(i);*/
-    /*i = next;*/
-    /*}*/
-
-    /*free(next);*/
+    for (int j = 0; j < 100; j++){
+        if (variant->samples[j]) {
+            free(variant->samples[j]);
+        }
+    }
 
     free(variant);
 }

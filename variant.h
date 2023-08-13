@@ -21,8 +21,6 @@ typedef struct Variant {
 
     struct info_fields_hasht *hashtab[HASHSIZE];
 
-    /*Snpeff_ANN **snpeffann;*/
-    /*struct Snpeff_ANN *snpeffann;*/
     struct Snpeff_ANN *snpeffann;
 } Variant;
 

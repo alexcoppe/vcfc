@@ -150,4 +150,5 @@ void reset_Snpeff_ANN(Snpeff_ANN *snpeffann){
     free(snpeffann->Protein_position_Protein_len);
     free(snpeffann->Distance_to_feature);
     free(snpeffann->Errors);
+    free(snpeffann);
 }
