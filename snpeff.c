@@ -34,7 +34,7 @@ char **get_snpeff_subfields(char *fields){
     size_t l2 = 0;
     int j = 0;
 
-    strlcpy(copied_info, fields, l);
+    strncpy(copied_info, fields, l);
 
     token = strtok(copied_info, ",");
 
@@ -71,49 +71,49 @@ Snpeff_ANN *get_snpeff_annotation_field(char *single_annotation){
 
         if (i == 0){
             snpeffann->ALT = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->ALT, s, strlen(s) + 1);
+            strncpy(snpeffann->ALT, s, strlen(s) + 1);
         } else if (i == 1){
             snpeffann->Annotation = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Annotation, s, strlen(s) + 1);
+            strncpy(snpeffann->Annotation, s, strlen(s) + 1);
         } else if (i == 2){
             snpeffann->Putative_impact = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Putative_impact, s, strlen(s) + 1);
+            strncpy(snpeffann->Putative_impact, s, strlen(s) + 1);
         } else if (i == 3){
             snpeffann->Gene_name = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Gene_name, s, strlen(s) + 1);
+            strncpy(snpeffann->Gene_name, s, strlen(s) + 1);
         } else if (i == 4){
             snpeffann->Gene_ID = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Gene_ID, s, strlen(s) + 1);
+            strncpy(snpeffann->Gene_ID, s, strlen(s) + 1);
         } else if (i == 5){
             snpeffann->Feature_type = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Feature_type, s, strlen(s) + 1);
+            strncpy(snpeffann->Feature_type, s, strlen(s) + 1);
         } else if (i == 6){
             snpeffann->Feature_ID = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Feature_ID, s, strlen(s) + 1);
+            strncpy(snpeffann->Feature_ID, s, strlen(s) + 1);
         } else if (i == 7){
             snpeffann->Transcript_biotype = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Transcript_biotype, s, strlen(s) + 1);
+            strncpy(snpeffann->Transcript_biotype, s, strlen(s) + 1);
         } else if (i == 8){
             snpeffann->Rank = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Rank, s, strlen(s) + 1);
+            strncpy(snpeffann->Rank, s, strlen(s) + 1);
         } else if (i == 9){
             snpeffann->HGVS_c = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->HGVS_c, s, strlen(s) + 1);
+            strncpy(snpeffann->HGVS_c, s, strlen(s) + 1);
         } else if (i == 10){
             snpeffann->HGVS_p = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->HGVS_p, s, strlen(s) + 1);
+            strncpy(snpeffann->HGVS_p, s, strlen(s) + 1);
         } else if (i == 11){
             snpeffann->cDNA_position_cDNA_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->cDNA_position_cDNA_len, s, strlen(s) + 1);
+            strncpy(snpeffann->cDNA_position_cDNA_len, s, strlen(s) + 1);
         } else if (i == 12){
             snpeffann->CDS_position_CDS_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->CDS_position_CDS_len, s, strlen(s) + 1);
+            strncpy(snpeffann->CDS_position_CDS_len, s, strlen(s) + 1);
         } else if (i == 13){
             snpeffann->Protein_position_Protein_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Protein_position_Protein_len, s, strlen(s) + 1);
+            strncpy(snpeffann->Protein_position_Protein_len, s, strlen(s) + 1);
         } else if (i == 14){
             snpeffann->Distance_to_feature = (char *) malloc(sizeof(char) * (strlen(s)));
-            strlcpy(snpeffann->Distance_to_feature, s, strlen(s) + 1);
+            strncpy(snpeffann->Distance_to_feature, s, strlen(s) + 1);
         }
 
         snpeffann->next = NULL;
@@ -125,7 +125,7 @@ Snpeff_ANN *get_snpeff_annotation_field(char *single_annotation){
     }
 
     snpeffann->Errors = (char *) malloc(sizeof(char) * (strlen(p)));
-    strlcpy(snpeffann->Errors, s, strlen(p) + 1);
+    strncpy(snpeffann->Errors, s, strlen(p) + 1);
     
     /*memset(ALT,0,strlen(ALT));*/
 

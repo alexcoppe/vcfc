@@ -100,7 +100,8 @@ char **get_columns(const char *line, const char *delimiter_char) {
     static char *returned_list[100] = {NULL};
 
     /* Use strlcpy insteed of strncpy because is more secure */
-    strlcpy(copied_line, line, l);
+    /*strlcpy(copied_line, line, l);*/
+    strncpy(copied_line, line, l);
 
     // If the delimiter is found in the string
     if (strstr(copied_line, delim) != NULL) {
@@ -108,7 +109,8 @@ char **get_columns(const char *line, const char *delimiter_char) {
         
         while (ptr != NULL) {
             returned_line = (char *) malloc(strlen(ptr) + 1);
-            strlcpy(returned_line, ptr, strlen(ptr) + 1);
+            /*strlcpy(returned_line, ptr, strlen(ptr) + 1);*/
+            strncpy(returned_line, ptr, strlen(ptr) + 1);
             returned_line[strcspn(returned_line, "\n")] = 0;
             returned_list[i] = returned_line;
             ptr = strtok(NULL, delim);
