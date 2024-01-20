@@ -52,82 +52,116 @@ char **get_snpeff_subfields(char *fields){
 
 
 /* This function uses the strchr function insteed of the strtok one because 
-as explained here: https://stackoverflow.com/questions/3375530/c-parse-empty-tokens-from-a-string-with-strtok
-it's better much better to loop with a memcpy inside the loop. It's fast and does not destroy the input buffer */
+as explained here: https://stackoverflow.com/questions/3375530/c-parse-empty-tokens-from-a-string-with-strtok*/
 Snpeff_ANN *get_snpeff_annotation_field(char *single_annotation){
-    char *p2;
-    int i = 0;
     Snpeff_ANN *snpeffann = (Snpeff_ANN *) malloc(sizeof(Snpeff_ANN));
+    char *inputString = single_annotation;
+    int ii = 0;
 
-    const char *const string = single_annotation;
+    char *token = strchr(single_annotation, '|');
 
-    const char *p = string, *q;
-
-    char *s;
-
-    while ( ( q = strchr( p, '|' ) ) != NULL ){
-        s = (char *) malloc(sizeof(char ) * (q-p));
-        memcpy(s, p, q-p);
-
-        if (i == 0){
-            snpeffann->ALT = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->ALT, s, strlen(s) + 1);
-        } else if (i == 1){
-            snpeffann->Annotation = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Annotation, s, strlen(s) + 1);
-        } else if (i == 2){
-            snpeffann->Putative_impact = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Putative_impact, s, strlen(s) + 1);
-        } else if (i == 3){
-            snpeffann->Gene_name = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Gene_name, s, strlen(s) + 1);
-        } else if (i == 4){
-            snpeffann->Gene_ID = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Gene_ID, s, strlen(s) + 1);
-        } else if (i == 5){
-            snpeffann->Feature_type = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Feature_type, s, strlen(s) + 1);
-        } else if (i == 6){
-            snpeffann->Feature_ID = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Feature_ID, s, strlen(s) + 1);
-        } else if (i == 7){
-            snpeffann->Transcript_biotype = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Transcript_biotype, s, strlen(s) + 1);
-        } else if (i == 8){
-            snpeffann->Rank = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Rank, s, strlen(s) + 1);
-        } else if (i == 9){
-            snpeffann->HGVS_c = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->HGVS_c, s, strlen(s) + 1);
-        } else if (i == 10){
-            snpeffann->HGVS_p = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->HGVS_p, s, strlen(s) + 1);
-        } else if (i == 11){
-            snpeffann->cDNA_position_cDNA_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->cDNA_position_cDNA_len, s, strlen(s) + 1);
-        } else if (i == 12){
-            snpeffann->CDS_position_CDS_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->CDS_position_CDS_len, s, strlen(s) + 1);
-        } else if (i == 13){
-            snpeffann->Protein_position_Protein_len = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Protein_position_Protein_len, s, strlen(s) + 1);
-        } else if (i == 14){
-            snpeffann->Distance_to_feature = (char *) malloc(sizeof(char) * (strlen(s)));
-            strncpy(snpeffann->Distance_to_feature, s, strlen(s) + 1);
+    while (token != NULL){
+        if (ii == 0){
+            snpeffann->ALT = malloc(token - inputString + 1);
+            strncpy(snpeffann->ALT, inputString, token - inputString);
+            snpeffann->ALT[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->ALT);*/
         }
-
+        if (ii == 1){
+            snpeffann->Annotation = malloc(token - inputString + 1);
+            strncpy(snpeffann->Annotation, inputString, token - inputString);
+            snpeffann->Annotation[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Annotation);*/
+        }
+        if (ii == 2){
+            snpeffann->Putative_impact = malloc(token - inputString + 1);
+            strncpy(snpeffann->Putative_impact, inputString, token - inputString);
+            snpeffann->Annotation[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Putative_impact);*/
+        }
+        if (ii == 3){
+            snpeffann->Gene_name = malloc(token - inputString + 1);
+            strncpy(snpeffann->Gene_name, inputString, token - inputString);
+            snpeffann->Gene_name[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Gene_name);*/
+        }
+        if (ii == 4){
+            snpeffann->Gene_ID = malloc(token - inputString + 1);
+            strncpy(snpeffann->Gene_ID, inputString, token - inputString);
+            snpeffann->Gene_ID[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Gene_ID);*/
+        }
+        if (ii == 5){
+            snpeffann->Feature_type = malloc(token - inputString + 1);
+            strncpy(snpeffann->Feature_type, inputString, token - inputString);
+            snpeffann->Feature_type[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Feature_type);*/
+        }
+        if (ii == 6){
+            snpeffann->Feature_ID = malloc(token - inputString + 1);
+            strncpy(snpeffann->Feature_ID, inputString, token - inputString);
+            snpeffann->Feature_ID[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Feature_ID);*/
+        }
+        if (ii == 7){
+            snpeffann->Transcript_biotype = malloc(token - inputString + 1);
+            strncpy(snpeffann->Transcript_biotype, inputString, token - inputString);
+            snpeffann->Transcript_biotype[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Transcript_biotype);*/
+        }
+        if (ii == 8){
+            snpeffann->Rank = malloc(token - inputString + 1);
+            strncpy(snpeffann->Rank, inputString, token - inputString);
+            snpeffann->Rank[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Rank);*/
+        }
+        if (ii == 9){
+            snpeffann->HGVS_c = malloc(token - inputString + 1);
+            strncpy(snpeffann->HGVS_c, inputString, token - inputString);
+            snpeffann->HGVS_c[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->HGVS_c);*/
+        }
+        if (ii == 10){
+            snpeffann->HGVS_p = malloc(token - inputString + 1);
+            strncpy(snpeffann->HGVS_p, inputString, token - inputString);
+            snpeffann->HGVS_p[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->HGVS_p);*/
+        }
+        if (ii == 11){
+            snpeffann->cDNA_position_cDNA_len = malloc(token - inputString + 1);
+            strncpy(snpeffann->cDNA_position_cDNA_len, inputString, token - inputString);
+            snpeffann->cDNA_position_cDNA_len[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->cDNA_position_cDNA_len);*/
+        }
+        if (ii == 12){
+            snpeffann->CDS_position_CDS_len = malloc(token - inputString + 1);
+            strncpy(snpeffann->CDS_position_CDS_len, inputString, token - inputString);
+            snpeffann->CDS_position_CDS_len[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->CDS_position_CDS_len);*/
+        }
+        if (ii == 13){
+            snpeffann->Protein_position_Protein_len = malloc(token - inputString + 1);
+            strncpy(snpeffann->Protein_position_Protein_len, inputString, token - inputString);
+            snpeffann->Protein_position_Protein_len[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Protein_position_Protein_len);*/
+        }
+        if (ii == 14){
+            snpeffann->Distance_to_feature = malloc(token - inputString + 1);
+            strncpy(snpeffann->Distance_to_feature, inputString, token - inputString);
+            snpeffann->Distance_to_feature[token - inputString] = '\0';
+            /*printf("%s\n", snpeffann->Distance_to_feature);*/
+        }
+        
         snpeffann->next = NULL;
+        ii++;
 
-        free(s);
+        inputString = token + 1;
 
-        i++;
-        p = q + 1;
+        token = strchr(inputString, '|');
     }
-
-    snpeffann->Errors = (char *) malloc(sizeof(char) * (strlen(p)));
-    strncpy(snpeffann->Errors, s, strlen(p) + 1);
-    
-    /*memset(ALT,0,strlen(ALT));*/
+    snpeffann->Errors = malloc(token - inputString + 1);
+    snpeffann->Errors = strdup(inputString);
+    /*printf("%s\n", snpeffann->Errors);*/
 
     return snpeffann;
 }

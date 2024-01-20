@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
     static struct info_fields_hasht *damnhash[HASHSIZE];
 
     if (!(file = fopen(argv[1], "r"))) { 
-        fprintf(stderr, "Coud not find file: %s\n", argv[0]);
+        fprintf(stderr, "Coud not find file: %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
@@ -38,6 +38,7 @@ int main(int argc, char *argv[]){
             continue;
 
         var = get_variant_from_vcf_line(line);
+        /*nice_print_variant(var);*/
 
         get_info_field(var->info, damnhash);
         ANN = lookup("ANN", damnhash);
@@ -53,12 +54,14 @@ int main(int argc, char *argv[]){
                 if (ANN->value[z] == ',')
                     number_of_subfields++;
             }
+            /*printf("%s\n", ANN->value);*/
 
             ann_subfields = get_snpeff_subfields(ANN->value);
 
             if (number_of_subfields == 1){
                 var->snpeffann = get_snpeff_annotation_field(ann_subfields[0]);
-            } else {
+            }
+            else {
                 for (int w = 0; w < number_of_subfields - 1; w++){
                     if (w == 0){
                         var->snpeffann = get_snpeff_annotation_field(ann_subfields[w]);
