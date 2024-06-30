@@ -40,7 +40,7 @@ Variant *get_variant_from_vcf_line(char *vcf_line){
     snp->ref = strdup(row_fields[3]);
     snp->alt = strdup(row_fields[4]);
 
-    if (row_fields[5] == ".")
+    if (strcmp(row_fields[5], ".") == 0)
         snp->qual = -1;
     else
         snp->qual = atoi(row_fields[5]);
